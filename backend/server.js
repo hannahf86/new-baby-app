@@ -2,6 +2,7 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
+const testRoutes = require('./routes/tests')
 
 // EXPRESS APP
 const app = express();
@@ -14,14 +15,15 @@ const app = express();
     })
 
 // ROUTE HANDLER
-
+app.use('/api/routes/tests', testRoutes)
 
 // CONNNECT TO DB
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
+        console.log('connected to database')
         // LISTEN
         app.listen(process.env.PORT, () => {
-            console.log('connect to db and listening on port ' + process.env.PORT)
+            console.log('listening on port ' + process.env.PORT)
         })
     }) .catch(( error ) => {
         console.log(error.message)
